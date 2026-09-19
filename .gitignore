@@ -24,5 +24,8 @@ dump.rdb
 !backend/**/*.py
 !frontend/**/*.py
 !backend/start.sh
-*.txt
+e2e_prompt.txt
 reference/
+!backend/requirements.txt
+!backend/.env.example
+!frontend/.env.example
