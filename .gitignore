@@ -1,0 +1,28 @@
+# Python
+__pycache__/
+*.py[cod]
+*.class
+venv/
+.env
+backend/local_temp/
+backend/fastapi.log
+backend/celery.log
+backend/e2e.log
+backend/e2e_final.log
+backend/certificate.db
+
+# Node
+node_modules/
+dist/
+.DS_Store
+
+# Scratch files & Redis
+redis.zip
+redis/
+dump.rdb
+*.py
+!backend/**/*.py
+!frontend/**/*.py
+!backend/start.sh
+*.txt
+reference/
