@@ -3,6 +3,7 @@ import { useSearchParams, useNavigate } from 'react-router-dom';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { getEvent } from '../../api/events';
 import { getGenerationStatus, startGeneration } from '../../api/generation';
+import { apiClient } from '../../api/client';
 import { 
   ArrowLeft, Calendar, MapPin, Users, CheckCircle2, AlertTriangle, 
   Play, Pause, Square, Zap, Clock, FileText, Timer, Download, Mail, BarChart3, Info
@@ -14,13 +15,26 @@ export const GenerationCenter = () => {
   const navigate = useNavigate();
   const queryClient = useQueryClient();
   
+  const [isGenerating, setIsGenerating] = useState(false);
+  const [isPlaying, setIsPlaying] = useState(false);
+  const [downloading, setDownloading] = useState(false);
+  const [progress, setProgress] = useState(0);
+  const totalRecords = 498;
+
   const { data: event, isLoading: isEventLoading } = useQuery({ 
     queryKey: ['event', eventId], 
     queryFn: () => getEvent(Number(eventId)),
     enabled: !!eventId
   });
 
-  const { data: jobs, isLoading: isJobsLoading } = useQuery({
+  const { data: statusData, refetch } = useQuery({
+    queryKey: ['generationStatus', eventId],
+    queryFn: () => getGenerationStatus(Number(eventId)),
+    enabled: !!eventId,
+    refetchInterval: isGenerating ? 2000 : false
+  });
+
+  const { data: jobs } = useQuery({
     queryKey: ['generation', eventId],
     queryFn: () => getGenerationStatus(Number(eventId)),
     enabled: !!eventId,
