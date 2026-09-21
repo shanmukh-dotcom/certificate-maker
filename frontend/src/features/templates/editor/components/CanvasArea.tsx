@@ -1,7 +1,7 @@
 import { useEditorStore } from '../../../../store/editorStore';
 import type { EditorElement } from '../../../../store/editorStore';
-import { Stage, Layer, Rect, Text } from 'react-konva';
-import { useRef } from 'react';
+import { Stage, Layer, Rect, Text, Image as KonvaImageComponent } from 'react-konva';
+import { useRef, useEffect, useState } from 'react';
 
 const MM_TO_PX = 3.7795275591; // 96 DPI
 
@@ -83,11 +83,76 @@ export const CanvasArea = () => {
   );
 };
 
+const KonvaImage = ({ el, xPx, yPx, wPx, hPx, isSelected, onSelect, onChange, zoom }: any) => {
+  const [img, setImg] = useState<HTMLImageElement | null>(null);
+
+  useEffect(() => {
+    if (el.src) {
+      const image = new window.Image();
+      image.src = el.src;
+      image.onload = () => {
+        setImg(image);
+      };
+    }
+  }, [el.src]);
+
+  return (
+    <>
+      {img && (
+        <KonvaImageComponent
+          image={img}
+          x={xPx}
+          y={yPx}
+          width={wPx}
+          height={hPx}
+          rotation={el.rotation}
+          onClick={onSelect}
+          onTap={onSelect}
+          draggable={!el.isLocked}
+          onDragEnd={(e) => {
+            onChange({
+              x: e.target.x() / (MM_TO_PX * zoom),
+              y: e.target.y() / (MM_TO_PX * zoom)
+            });
+          }}
+        />
+      )}
+      {isSelected && (
+        <Rect
+          x={xPx}
+          y={yPx}
+          width={wPx}
+          height={hPx}
+          stroke="#2563EB"
+          strokeWidth={1}
+          dash={[4, 4]}
+        />
+      )}
+    </>
+  );
+};
+
 const EditableElement = ({ el, isSelected, onSelect, onChange, zoom }: { el: EditorElement, isSelected: boolean, onSelect: () => void, onChange: (attrs: any) => void, zoom: number }) => {
   const xPx = el.x * MM_TO_PX * zoom;
   const yPx = el.y * MM_TO_PX * zoom;
   const wPx = el.width * MM_TO_PX * zoom;
   const hPx = el.height * MM_TO_PX * zoom;
+
+  if (el.type === 'image') {
+    return (
+      <KonvaImage
+        el={el}
+        xPx={xPx}
+        yPx={yPx}
+        wPx={wPx}
+        hPx={hPx}
+        isSelected={isSelected}
+        onSelect={onSelect}
+        onChange={onChange}
+        zoom={zoom}
+      />
+    );
+  }
 
   if (el.type === 'text') {
     return (
