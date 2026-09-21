@@ -37,9 +37,31 @@ app.include_router(certificates.router)
 @app.on_event("startup")
 def startup_event():
     try:
-        import seed
-    except Exception:
-        pass
+        from app.models.database import SessionLocal
+        from app.models.models import User, Organization, UserRole
+        from app.core.security import get_password_hash
+        
+        db = SessionLocal()
+        org = db.query(Organization).first()
+        if not org:
+            org = Organization(name="Shanmukha's Org")
+            db.add(org)
+            db.commit()
+            db.refresh(org)
+            
+        admin = db.query(User).filter(User.email == "Shanmukha Chennuboina").first()
+        if not admin:
+            admin = User(
+                organization_id=org.id,
+                name="Shanmukha Chennuboina",
+                email="Shanmukha Chennuboina",
+                password_hash=get_password_hash("shanmukha@2007"),
+                role=UserRole.ADMIN
+            )
+            db.add(admin)
+            db.commit()
+    except Exception as e:
+        print(f"Failed to seed user: {e}")
 
 @app.get("/")
 def read_root():
