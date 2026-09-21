@@ -1,8 +1,10 @@
+import React, { useRef } from 'react';
 import { useEditorStore } from '../../../../store/editorStore';
 import { Type, Image as ImageIcon, Square, Minus, User, Calendar, Tag, Briefcase, Building, Plus, Lock, Eye, GripVertical } from 'lucide-react';
 
 export const SidebarLeft = () => {
   const { elements, selectedElementId, setSelectedElement, addElement } = useEditorStore();
+  const fileInputRef = useRef<HTMLInputElement>(null);
 
   const handleAddText = (content: string, name: string) => {
     addElement({
@@ -23,15 +25,44 @@ export const SidebarLeft = () => {
     });
   };
 
+  const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = (event) => {
+        addElement({
+          id: Date.now().toString(),
+          type: 'image',
+          name: file.name,
+          src: event.target?.result as string,
+          x: 0,
+          y: 0,
+          width: 297,
+          height: 210,
+          rotation: 0,
+          isLocked: false
+        });
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
   return (
     <div className="w-[280px] bg-white border-r border-slate-200 flex flex-col h-full shrink-0 overflow-y-auto custom-scrollbar">
       <div className="p-5 border-b border-slate-100">
         <h3 className="text-xs font-bold text-slate-900 tracking-wider mb-4 uppercase">Elements</h3>
         <div className="space-y-2">
+          <input 
+            type="file" 
+            ref={fileInputRef} 
+            className="hidden" 
+            accept="image/*" 
+            onChange={handleImageUpload} 
+          />
           <button onClick={() => handleAddText('Double click to edit', 'Text Block')} className="w-full flex items-center px-4 py-2.5 bg-slate-50 hover:bg-blue-50 text-slate-700 hover:text-blue-700 rounded-xl text-sm font-medium transition-colors">
             <Type size={18} className="mr-3 text-slate-400" /> Text
           </button>
-          <button className="w-full flex items-center px-4 py-2.5 bg-slate-50 hover:bg-blue-50 text-slate-700 hover:text-blue-700 rounded-xl text-sm font-medium transition-colors">
+          <button onClick={() => fileInputRef.current?.click()} className="w-full flex items-center px-4 py-2.5 bg-slate-50 hover:bg-blue-50 text-slate-700 hover:text-blue-700 rounded-xl text-sm font-medium transition-colors">
             <ImageIcon size={18} className="mr-3 text-slate-400" /> Image
           </button>
           <button className="w-full flex items-center px-4 py-2.5 bg-slate-50 hover:bg-blue-50 text-slate-700 hover:text-blue-700 rounded-xl text-sm font-medium transition-colors">
