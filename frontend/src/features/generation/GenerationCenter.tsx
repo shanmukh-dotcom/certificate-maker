@@ -328,10 +328,10 @@ export const GenerationCenter = () => {
           <div>
             <h3 className="text-sm font-bold text-slate-900 mb-4 px-2">Actions After Completion</h3>
             <div className="space-y-3">
-              <div className="bg-white border border-slate-100 p-4 rounded-2xl flex items-start space-x-3 shadow-sm hover:border-blue-200 transition-colors cursor-pointer group">
+              <div onClick={handleDownload} className="bg-white border border-slate-100 p-4 rounded-2xl flex items-start space-x-3 shadow-sm hover:border-blue-200 transition-colors cursor-pointer group">
                 <Download size={18} className="text-blue-600 mt-0.5" />
                 <div>
-                  <h4 className="text-sm font-bold text-slate-900 group-hover:text-blue-700 transition-colors">Download All Certificates</h4>
+                  <h4 className="text-sm font-bold text-slate-900 group-hover:text-blue-700 transition-colors">{downloading ? 'Downloading ZIP...' : 'Download All Certificates'}</h4>
                   <p className="text-xs text-slate-500">Get a ZIP file of all certificates</p>
                 </div>
               </div>
