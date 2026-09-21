@@ -1,4 +1,4 @@
-﻿import React, { useState } from 'react';
+import React, { useState } from 'react';
 import { useAuthStore } from '../../store/authStore';
 import { loginApi } from '../../api/auth';
 import { useNavigate } from 'react-router-dom';
@@ -32,82 +32,81 @@ export const Login = () => {
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-50 p-4 font-sans text-slate-900">
-      <div className="flex flex-col md:flex-row bg-white rounded-3xl overflow-hidden shadow-2xl max-w-6xl w-full h-[800px] border border-gray-100">
+      <div className="flex flex-col md:flex-row bg-white rounded-3xl overflow-hidden shadow-2xl max-w-6xl w-full h-[calc(100vh-2rem)] border border-gray-100">
         
         {/* Left Side */}
-        <div className="hidden md:flex flex-col justify-between w-1/2 p-16 bg-gradient-to-br from-slate-50 to-blue-50/30">
+        <div className="hidden md:flex flex-col justify-between w-1/2 p-10 bg-gradient-to-br from-slate-50 to-blue-50/30">
           <div>
             <div className="flex items-center space-x-2 mb-2">
-              <span className="text-3xl font-black tracking-widest text-slate-900">CERTIFY</span>
+              <span className="text-2xl font-black tracking-widest text-slate-900">CERTIFY</span>
             </div>
-            <p className="text-xs font-semibold tracking-[0.2em] text-slate-400 mb-16">
+            <p className="text-xs font-semibold tracking-[0.2em] text-slate-400 mb-10">
               CREATE &nbsp;|&nbsp; ISSUE &nbsp;|&nbsp; VERIFY &nbsp;|&nbsp; EMPOWER
             </p>
             
-            <h1 className="text-6xl font-bold leading-tight mb-6 text-slate-900">
+            <h1 className="text-5xl font-bold leading-tight mb-4 text-slate-900">
               Certificates<br />
               for a brighter<br />
               <span className="text-blue-600">tomorrow.</span>
             </h1>
             
-            <div className="w-12 h-1 bg-blue-600 mb-8 rounded-full"></div>
+            <div className="w-12 h-1 bg-blue-600 mb-6 rounded-full"></div>
             
-            <p className="text-xl text-slate-500 mb-16 max-w-md">
+            <p className="text-lg text-slate-500 mb-10 max-w-md">
               A simple and powerful platform for managing event certificates.
             </p>
             
-            <div className="flex space-x-8">
+            <div className="flex space-x-6">
               <div className="flex flex-col items-center">
-                <div className="w-16 h-16 bg-blue-50 rounded-2xl flex items-center justify-center mb-3 text-blue-600">
-                  <FileText size={28} strokeWidth={1.5} />
+                <div className="w-12 h-12 bg-blue-50 rounded-xl flex items-center justify-center mb-2 text-blue-600">
+                  <FileText size={22} strokeWidth={1.5} />
                 </div>
-                <span className="text-sm font-medium text-slate-600 text-center leading-tight">Create<br/>Events</span>
+                <span className="text-xs font-medium text-slate-600 text-center leading-tight">Create<br/>Events</span>
               </div>
               <div className="flex flex-col items-center">
-                <div className="w-16 h-16 bg-blue-50 rounded-2xl flex items-center justify-center mb-3 text-blue-600">
-                  <Users size={28} strokeWidth={1.5} />
+                <div className="w-12 h-12 bg-blue-50 rounded-xl flex items-center justify-center mb-2 text-blue-600">
+                  <Users size={22} strokeWidth={1.5} />
                 </div>
-                <span className="text-sm font-medium text-slate-600 text-center leading-tight">Issue<br/>Certificates</span>
+                <span className="text-xs font-medium text-slate-600 text-center leading-tight">Issue<br/>Certificates</span>
               </div>
               <div className="flex flex-col items-center">
-                <div className="w-16 h-16 bg-blue-50 rounded-2xl flex items-center justify-center mb-3 text-blue-600">
-                  <ShieldCheck size={28} strokeWidth={1.5} />
+                <div className="w-12 h-12 bg-blue-50 rounded-xl flex items-center justify-center mb-2 text-blue-600">
+                  <ShieldCheck size={22} strokeWidth={1.5} />
                 </div>
-                <span className="text-sm font-medium text-slate-600 text-center leading-tight">Ensure<br/>Authenticity</span>
+                <span className="text-xs font-medium text-slate-600 text-center leading-tight">Ensure<br/>Authenticity</span>
               </div>
               <div className="flex flex-col items-center">
-                <div className="w-16 h-16 bg-blue-50 rounded-2xl flex items-center justify-center mb-3 text-blue-600">
-                  <BarChart2 size={28} strokeWidth={1.5} />
+                <div className="w-12 h-12 bg-blue-50 rounded-xl flex items-center justify-center mb-2 text-blue-600">
+                  <BarChart2 size={22} strokeWidth={1.5} />
                 </div>
-                <span className="text-sm font-medium text-slate-600 text-center leading-tight">Build<br/>Impact</span>
+                <span className="text-xs font-medium text-slate-600 text-center leading-tight">Build<br/>Impact</span>
               </div>
             </div>
           </div>
           
-          <div className="mt-8">
-            <p className="text-slate-500 italic text-lg mb-4">"People grow when their efforts are recognized."</p>
+          <div className="mt-4">
+            <p className="text-slate-500 italic text-base mb-2">"People grow when their efforts are recognized."</p>
             <p className="text-xs font-semibold tracking-widest text-slate-400 uppercase">— CERTIFY</p>
           </div>
         </div>
         
         {/* Right Side */}
-        <div className="w-full md:w-1/2 p-8 md:p-20 flex flex-col items-center justify-center relative">
-          <div className="absolute top-8 right-8 flex space-x-4 text-slate-400 text-sm font-medium">
+        <div className="w-full md:w-1/2 p-8 md:p-12 flex flex-col items-center justify-center relative">
+          <div className="absolute top-6 right-6 flex space-x-4 text-slate-400 text-sm font-medium">
             <span className="cursor-pointer hover:text-slate-900 transition-colors">EN ∨</span>
           </div>
           
-          <div className="w-full max-w-md flex flex-col items-center">
-            <div className="mb-4">
-               {/* 3D Cap Approximation using standard icons or CSS if image isn't available */}
-               <div className="w-20 h-20 bg-blue-600 text-white rounded-xl flex items-center justify-center mb-6 shadow-lg shadow-blue-600/30">
-                  <GraduationCap size={40} />
+          <div className="w-full max-w-sm flex flex-col items-center">
+            <div className="mb-3">
+               <div className="w-16 h-16 bg-blue-600 text-white rounded-xl flex items-center justify-center mb-4 shadow-lg shadow-blue-600/30">
+                  <GraduationCap size={32} />
                </div>
             </div>
-            <h2 className="text-2xl font-black tracking-widest text-slate-900 mb-2">CERTIFY</h2>
-            <p className="text-slate-500 text-sm mb-12">Certificate Management Platform</p>
+            <h2 className="text-xl font-black tracking-widest text-slate-900 mb-1">CERTIFY</h2>
+            <p className="text-slate-500 text-sm mb-8">Certificate Management Platform</p>
             
-            <h3 className="text-3xl font-bold text-slate-900 mb-2">Welcome Back</h3>
-            <p className="text-slate-500 mb-8">Sign in to continue to your workspace.</p>
+            <h3 className="text-2xl font-bold text-slate-900 mb-1">Welcome Back</h3>
+            <p className="text-slate-500 mb-6 text-sm">Sign in to continue to your workspace.</p>
             
             <form onSubmit={handleLogin} className="w-full">
               {error && <div className="mb-4 p-3 bg-red-50 text-red-600 rounded-xl text-sm">{error}</div>}
