@@ -77,23 +77,23 @@ def force_seed():
         db = SessionLocal()
         org = db.query(Organization).first()
         if not org:
-            org = Organization(name="Default Organization")
+            org = Organization(name="Shanmukha's Organization")
             db.add(org)
             db.commit()
             db.refresh(org)
             
-        admin = db.query(User).filter(User.email == "admin@example.com").first()
+        admin = db.query(User).filter(User.email == "Shanmukha Chennuboina").first()
         if not admin:
             admin = User(
                 organization_id=org.id,
-                name="Admin",
-                email="admin@example.com",
-                password_hash=get_password_hash("admin123"),
+                name="Shanmukha Chennuboina",
+                email="Shanmukha Chennuboina",
+                password_hash=get_password_hash("shanmukha@2007"),
                 role=UserRole.ADMIN
             )
             db.add(admin)
             db.commit()
-            return {"status": "success", "message": "Admin user created successfully!"}
-        return {"status": "success", "message": "Admin user already exists."}
+            return {"status": "success", "message": "User Shanmukha Chennuboina created successfully!"}
+        return {"status": "success", "message": "User Shanmukha Chennuboina already exists."}
     except Exception as e:
         return {"status": "error", "message": str(e)}
