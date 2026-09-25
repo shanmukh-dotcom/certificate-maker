@@ -32,10 +32,11 @@ def process_generation_job(self, job_id: int):
         for p in participants:
             existing = db.query(Certificate).filter(Certificate.participant_id == p.id, Certificate.event_id == job.event_id).first()
             if existing and existing.status == CertificateStatus.ISSUED:
-                job.completed += 1
-                job.pending -= 1
-                db.commit()
-                continue
+                if existing.pdf_path and os.path.exists(existing.pdf_path):
+                    job.completed += 1
+                    job.pending -= 1
+                    db.commit()
+                    continue
             
             try:
                 cert_id_str = f"PU-CERT-{p.event_id}-{p.id}-{uuid.uuid4().hex[:6].upper()}"
